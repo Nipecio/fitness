@@ -1389,20 +1389,6 @@
     </div>
 
     <script>
-      const themeMeta = document.querySelector('meta[name="theme-color"]');
-
-      window.addEventListener("scroll", () => {
-        const scrollY = window.scrollY;
-        const pageHeight =
-          document.documentElement.scrollHeight - window.innerHeight;
-        const halfway = pageHeight / 2;
-
-        if (scrollY < halfway) {
-          themeMeta.setAttribute("content", "#201c1c"); // top color
-        } else {
-          themeMeta.setAttribute("content", "#000000"); // bottom color
-        }
-      });
       let stopwatchInterval;
       let stopwatchTime = 0;
       let isRunning = false;
