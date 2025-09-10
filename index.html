@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitTrack - Your Fitness Companion</title>
+    <!-- Added Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Added futuristic Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/png" href="Fitness.pngs" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Fitness Tracker" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#202434" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <!-- App icons for iOS Home Screen -->
+    <link rel="apple-touch-icon" href="Fitness.png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        /* Updated to use futuristic fonts */
+        font-family: "Exo 2", "Arial", sans-serif;
+        /* Enhanced background with more visible animated elements */
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        color: #ffffff;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Replaced subtle waves with more visible floating energy orbs */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 30%,
+            rgba(0, 255, 136, 0.08) 0%,
+            transparent 25%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(0, 204, 255, 0.06) 0%,
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 60% 20%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 30% 80%,
+            rgba(0, 204, 255, 0.07) 0%,
+            transparent 35%
+          );
+        animation: floatingOrbs 20s ease-in-out infinite;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* Added moving light streaks for dynamic effect */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            45deg,
+            transparent 40%,
+            rgba(0, 255, 136, 0.03) 50%,
+            transparent 60%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 40%,
+            rgba(0, 204, 255, 0.02) 50%,
+            transparent 60%
+          );
+        animation: lightStreaks 15s linear infinite;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      @keyframes floatingOrbs {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 0.6;
+        }
+        25% {
+          transform: translate(20px, -30px) rotate(90deg);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translate(-15px, -20px) rotate(180deg);
+          opacity: 0.4;
+        }
+        75% {
+          transform: translate(-25px, 10px) rotate(270deg);
+          opacity: 0.7;
+        }
+      }
+
+      @keyframes lightStreaks {
+        0% {
+          transform: translateX(-100%) translateY(-100%);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(100%) translateY(100%);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        max-width: 100vw;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* Landing Page */
+      .landing {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem;
+        text-align: center;
+        background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%);
+      }
+
+      .logo {
+        /* Updated logo to use Orbitron font */
+        font-family: "Orbitron", monospace;
+        font-size: 3rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+      }
+
+      .welcome-text {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        line-height: 1.6;
+      }
+
+      .start-btn {
+        background: linear-gradient(45deg, #00ff88, #00ccff);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        color: #000;
+        font-weight: bold;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+      }
+
+      .start-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+      }
+
+      /* Main App */
+      .app {
+        display: none;
+        min-height: 100vh;
+      }
+
+      .header {
+        background: rgba(26, 26, 26, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .nav-btn {
+        background: transparent;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        color: #ffffff;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .nav-btn.active {
+        background: linear-gradient(45deg, #00ff88, #00ccff);
+        color: #000;
+        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+      }
+
+      .content {
+        padding: 6rem 1rem 2rem;
+        min-height: 100vh;
+      }
+
+      .section {
+        display: none;
+      }
+
+      .section.active {
+        display: block;
+      }
+
+      .section-title {
+        /* Updated section titles to use Orbitron font */
+        font-family: "Orbitron", monospace;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        background: linear-gradient(45deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Goals Section */
+      .goal-input-container {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .goal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .goal-input-row {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .goal-input {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        color: #ffffff;
+        font-size: 1rem;
+        padding: 0.8rem;
+        border-radius: 10px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .goal-input:focus {
+        border-color: #00ff88;
+        box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+      }
+
+      .goal-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Dropdown styling */
+      .goal-select {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 26, 0.95),
+          rgba(0, 0, 0, 0.9)
+        );
+        border: 2px solid rgba(0, 255, 136, 0.4);
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 140px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+        /* remove default arrows */
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        /* custom arrow */
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2300ff88' viewBox='0 0 16 16'%3e%3cpath d='M8 11l4-4H4z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 14px;
+        padding-right: 2.5rem;
+      }
+
+      .goal-select:focus {
+        border-color: #00ff88;
+        box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      /* Option styling */
+      .goal-select option {
+        background: #1a1a1a;
+        color: #ffffff;
+        padding: 0.6rem 1rem;
+      }
+
+      /* Some browsers let you style hover/selected */
+      .goal-select option:checked {
+        background: #00ff88;
+        color: #000;
+      }
+
+      /* Firefox specific fixes */
+      @-moz-document url-prefix() {
+        .goal-select {
+          background-image: none !important;
+          padding-right: 1rem !important;
+        }
+      }
+
+      /* WebKit specific enhancements */
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        .goal-select:focus {
+          background-color: rgba(0, 0, 0, 0.9) !important;
+        }
+      }
+
+      /* Better mobile responsive layout for goal input */
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 2.5rem;
+        }
+
+        .goal-input-row {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .goal-select {
+          width: 100%;
+          min-width: unset;
+        }
+      }
+
+      .add-goal-btn {
+        background: linear-gradient(45deg, #00ff88, #00ccff);
+        border: none;
+        color: #000;
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .add-goal-btn:hover {
+        transform: scale(1.05);
+      }
+
+      .goals-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: rgba(0, 255, 136, 0.1);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        border-radius: 15px;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #00ff88;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        margin-top: 0.2rem;
+      }
+
+      .goals-filter {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        color: #ffffff;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .filter-btn.active {
+        background: rgba(0, 255, 136, 0.2);
+        border-color: #00ff88;
+      }
+
+      .goal-item {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .goal-item:hover {
+        border-color: rgba(0, 255, 136, 0.5);
+        transform: translateX(5px);
+      }
+
+      .goal-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .goal-text {
+        font-size: 1rem;
+        color: #ffffff;
+      }
+
+      .goal-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8rem;
+        opacity: 0.7;
+      }
+
+      .goal-priority {
+        padding: 0.2rem 0.6rem;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: bold;
+      }
+
+      .priority-high {
+        background: rgba(255, 69, 58, 0.2);
+        color: #ff453a;
+        border: 1px solid rgba(255, 69, 58, 0.3);
+      }
+
+      .priority-medium {
+        background: rgba(255, 159, 10, 0.2);
+        color: #ff9f0a;
+        border: 1px solid rgba(255, 159, 10, 0.3);
+      }
+
+      .priority-low {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00ff88;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .goal-category {
+        color: #00ccff;
+      }
+
+      /* Centered checkmark icon inside circle */
+      .goal-checkbox {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #00ff88;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: transparent;
+      }
+
+      .goal-checkbox.checked {
+        background: #00ff88;
+        box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        color: #000;
+      }
+
+      /* Stopwatch Section */
+      .stopwatch {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .timer-modes {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .mode-btn {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        color: #ffffff;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .mode-btn.active {
+        background: rgba(0, 255, 136, 0.2);
+        border-color: #00ff88;
+      }
+
+      .interval-controls {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 15px;
+        padding: 1rem;
+        margin: 1rem 0;
+        display: none;
+      }
+
+      .interval-controls.active {
+        display: block;
+      }
+
+      /* Fixed interval input styling to match theme */
+      .interval-input {
+        background: rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(0, 255, 136, 0.3) !important;
+        color: #ffffff !important;
+        padding: 0.5rem;
+        border-radius: 8px;
+        width: 60px;
+        text-align: center;
+        margin: 0 0.5rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .interval-input:focus {
+        border-color: #00ff88 !important;
+        box-shadow: 0 0 10px rgba(0, 255, 136, 0.2) !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+      }
+
+      /* Enhanced timer display with consistent glow */
+      .time-display {
+        font-family: "Orbitron", monospace;
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 2rem 0;
+        color: #00ff88;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+        transition: all 0.3s ease;
+      }
+
+      .time-display.work-phase {
+        color: #00ff88;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+      }
+
+      .time-display.rest-phase {
+        color: #ff453a;
+        text-shadow: 0 0 20px rgba(255, 69, 58, 0.6);
+      }
+
+      .lap-times {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-top: 2rem;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .lap-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      }
+
+      .workout-presets {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+
+      .preset-btn {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        color: #ffffff;
+        padding: 1rem;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .preset-btn:hover {
+        background: rgba(0, 255, 136, 0.1);
+        border-color: #00ff88;
+      }
+
+      .preset-time {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #00ff88;
+      }
+
+      .preset-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 0.3rem;
+      }
+
+      /* Enhanced stopwatch control buttons styling */
+      .stopwatch-controls {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+      }
+
+      .control-btn {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.2),
+          rgba(0, 255, 136, 0.1)
+        );
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        color: #ffffff;
+        padding: 1rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        font-weight: bold;
+        min-width: 100px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .control-btn:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.3),
+          rgba(0, 255, 136, 0.2)
+        );
+        border-color: #00ff88;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+      }
+
+      .control-btn:active {
+        transform: translateY(0);
+      }
+
+      .control-btn.start {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.4),
+          rgba(0, 255, 136, 0.2)
+        );
+      }
+
+      /* Nutrition Section */
+      .nutrition-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .nutrition-item {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+
+      .nutrition-item:hover {
+        border-color: rgba(0, 255, 136, 0.5);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 255, 136, 0.2);
+      }
+
+      .nutrition-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+      }
+
+      .nutrition-content {
+        padding: 1rem;
+      }
+
+      .nutrition-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .nutrition-name {
+        font-weight: bold;
+        color: #00ff88;
+        font-size: 1.1rem;
+      }
+
+      .nutrition-calories {
+        background: rgba(0, 255, 136, 0.2);
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+
+      .nutrition-type {
+        font-size: 0.9rem;
+        opacity: 0.7;
+        margin-top: 0.5rem;
+      }
+
+      /* Added nutrition modal styling */
+      .nutrition-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .nutrition-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 26, 0.95),
+          rgba(0, 0, 0, 0.9)
+        );
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modal-close:hover {
+        color: #00ff88;
+        transform: scale(1.1);
+      }
+
+      .modal-header {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        align-items: center;
+      }
+
+      .modal-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 15px;
+        object-fit: cover;
+        border: 2px solid rgba(0, 255, 136, 0.3);
+      }
+
+      .modal-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #00ff88;
+        margin-bottom: 0.5rem;
+      }
+
+      .modal-calories {
+        font-size: 1.1rem;
+        color: #00ccff;
+        font-weight: bold;
+      }
+
+      .nutrition-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .detail-section {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 15px;
+        padding: 1rem;
+      }
+
+      .detail-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #00ff88;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .detail-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+      }
+
+      .detail-item:last-child {
+        border-bottom: none;
+      }
+
+      .detail-value {
+        color: #00ccff;
+        font-weight: bold;
+      }
+
+      .ingredients-list {
+        color: #ffffff;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .cost-badge {
+        background: linear-gradient(45deg, #00ff88, #00ccff);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section.active {
+        animation: fadeIn 0.5s ease;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 2.5rem;
+        }
+
+        .time-display {
+          font-size: 3rem;
+        }
+
+        .stopwatch-controls {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .goal-input-row {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .goal-select {
+          width: 100%;
+          min-width: unset;
+        }
+
+        .timer-modes {
+          justify-content: center;
+        }
+
+        .workout-presets {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .modal-content {
+          padding: 1.5rem;
+          margin: 1rem;
+        }
+
+        .modal-header {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Landing Page -->
+      <div class="landing" id="landing">
+        <div class="logo">FitTrack</div>
+        <div class="welcome-text">
+          Welcome to your personal fitness companion.<br />
+          Track your goals, time your workouts, and plan your nutrition.<br />
+          Your journey to a healthier you starts here.
+        </div>
+        <button class="start-btn" onclick="startApp()">
+          Start Your Journey
+        </button>
+      </div>
+
+      <!-- Main App -->
+      <div class="app" id="app">
+        <div class="header">
+          <nav class="nav">
+            <button class="nav-btn active" onclick="showSection('goals')">
+              Goals
+            </button>
+            <button class="nav-btn" onclick="showSection('stopwatch')">
+              Timer
+            </button>
+            <button class="nav-btn" onclick="showSection('nutrition')">
+              Nutrition
+            </button>
+          </nav>
+        </div>
+
+        <div class="content">
+          <!-- Goals Section -->
+          <div class="section active" id="goals">
+            <h2 class="section-title">Fitness Goals</h2>
+
+            <!-- Goal statistics dashboard -->
+            <div class="goals-stats">
+              <div class="stat-card">
+                <div class="stat-number" id="totalGoals">0</div>
+                <div class="stat-label">Total Goals</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="completedGoals">0</div>
+                <div class="stat-label">Completed</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="highPriorityGoals">0</div>
+                <div class="stat-label">High Priority</div>
+              </div>
+            </div>
+
+            <!-- Enhanced input form with priority and category selection -->
+            <div class="goal-input-container">
+              <div class="goal-form">
+                <div class="goal-input-row">
+                  <input
+                    type="text"
+                    class="goal-input"
+                    id="goalInput"
+                    placeholder="Enter your fitness goal..."
+                    maxlength="100"
+                  />
+                  <select class="goal-select" id="goalPriority">
+                    <option value="low">Low Priority</option>
+                    <option value="medium" selected>Medium Priority</option>
+                    <option value="high">High Priority</option>
+                  </select>
+                </div>
+                <div class="goal-input-row">
+                  <select class="goal-select" id="goalCategory">
+                    <option value="fitness">
+                      <i class="fas fa-dumbbell"></i> Fitness
+                    </option>
+                    <option value="nutrition">
+                      <i class="fas fa-apple-alt"></i> Nutrition
+                    </option>
+                    <option value="wellness">
+                      <i class="fas fa-spa"></i> Wellness
+                    </option>
+                    <option value="strength">
+                      <i class="fas fa-fist-raised"></i> Strength
+                    </option>
+                    <option value="cardio">
+                      <i class="fas fa-running"></i> Cardio
+                    </option>
+                    <option value="flexibility">
+                      <i class="fas fa-child"></i> Flexibility
+                    </option>
+                  </select>
+                  <button class="add-goal-btn" onclick="addGoal()">
+                    <i class="fas fa-plus"></i> Add Goal
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Filter buttons for goal organization -->
+            <div class="goals-filter">
+              <button class="filter-btn active" onclick="filterGoals('all')">
+                All
+              </button>
+              <button class="filter-btn" onclick="filterGoals('high')">
+                High Priority
+              </button>
+              <button class="filter-btn" onclick="filterGoals('medium')">
+                Medium Priority
+              </button>
+              <button class="filter-btn" onclick="filterGoals('low')">
+                Low Priority
+              </button>
+            </div>
+
+            <div class="goals-list" id="goalsList">
+              <!-- Goals will be added dynamically -->
+            </div>
+          </div>
+
+          <!-- Stopwatch Section -->
+          <div class="section" id="stopwatch">
+            <h2 class="section-title">Workout Timer</h2>
+
+            <!-- Timer mode selection -->
+            <div class="timer-modes">
+              <button
+                class="mode-btn active"
+                onclick="setTimerMode('stopwatch')"
+              >
+                <i class="fas fa-stopwatch"></i> Stopwatch
+              </button>
+              <button class="mode-btn" onclick="setTimerMode('interval')">
+                <i class="fas fa-clock"></i> Interval
+              </button>
+              <button class="mode-btn" onclick="setTimerMode('presets')">
+                <i class="fas fa-list"></i> Presets
+              </button>
+            </div>
+
+            <!-- Workout presets -->
+            <div
+              class="workout-presets"
+              id="workoutPresets"
+              style="display: none"
+            >
+              <div class="preset-btn" onclick="startPresetTimer(300)">
+                <div class="preset-time">5:00</div>
+                <div class="preset-label">Quick Warm-up</div>
+              </div>
+              <div class="preset-btn" onclick="startPresetTimer(900)">
+                <div class="preset-time">15:00</div>
+                <div class="preset-label">HIIT Session</div>
+              </div>
+              <div class="preset-btn" onclick="startPresetTimer(1800)">
+                <div class="preset-time">30:00</div>
+                <div class="preset-label">Cardio Workout</div>
+              </div>
+              <div class="preset-btn" onclick="startPresetTimer(2700)">
+                <div class="preset-time">45:00</div>
+                <div class="preset-label">Full Workout</div>
+              </div>
+            </div>
+
+            <!-- Interval timer controls -->
+            <div class="interval-controls" id="intervalControls">
+              <div style="margin-bottom: 1rem">
+                <label><i class="fas fa-play"></i> Work: </label>
+                <input
+                  type="number"
+                  class="interval-input"
+                  id="workTime"
+                  value="30"
+                  min="1"
+                  max="999"
+                />
+                seconds
+              </div>
+              <div style="margin-bottom: 1rem">
+                <label><i class="fas fa-pause"></i> Rest: </label>
+                <input
+                  type="number"
+                  class="interval-input"
+                  id="restTime"
+                  value="10"
+                  min="1"
+                  max="999"
+                />
+                seconds
+              </div>
+              <div>
+                <label><i class="fas fa-repeat"></i> Rounds: </label>
+                <input
+                  type="number"
+                  class="interval-input"
+                  id="rounds"
+                  value="8"
+                  min="1"
+                  max="50"
+                />
+              </div>
+            </div>
+
+            <div class="stopwatch">
+              <div class="time-display" id="timeDisplay">00:00.00</div>
+              <div class="stopwatch-controls">
+                <button
+                  class="control-btn start"
+                  id="startBtn"
+                  onclick="startStopwatch()"
+                >
+                  <i class="fas fa-play"></i> Start
+                </button>
+                <button class="control-btn" onclick="resetStopwatch()">
+                  <i class="fas fa-stop"></i> Reset
+                </button>
+                <button
+                  class="control-btn"
+                  onclick="lapTime()"
+                  id="lapBtn"
+                  style="display: none"
+                >
+                  <i class="fas fa-flag"></i> Lap
+                </button>
+              </div>
+            </div>
+
+            <!-- Lap times display -->
+            <div class="lap-times" id="lapTimes" style="display: none">
+              <h3 style="margin-bottom: 1rem; color: #00ff88">
+                <i class="fas fa-list-ol"></i> Lap Times
+              </h3>
+              <div id="lapList"></div>
+            </div>
+          </div>
+
+          <!-- Nutrition Section -->
+          <div class="section" id="nutrition">
+            <h2 class="section-title">Nutrition Menu</h2>
+            <div class="nutrition-grid">
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('chicken')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=280&h=150&fit=crop&crop=center"
+                  alt="Grilled Chicken Breast"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Grilled Chicken Breast</div>
+                    <div class="nutrition-calories">165 cal</div>
+                  </div>
+                  <div class="nutrition-type">
+                    Non-Vegetarian • Protein Rich
+                  </div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('quinoa')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=280&h=150&fit=crop&crop=center"
+                  alt="Quinoa Salad Bowl"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Quinoa Salad Bowl</div>
+                    <div class="nutrition-calories">220 cal</div>
+                  </div>
+                  <div class="nutrition-type">Vegetarian • High Fiber</div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('salmon')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=280&h=150&fit=crop&crop=center"
+                  alt="Salmon Fillet"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Salmon Fillet</div>
+                    <div class="nutrition-calories">206 cal</div>
+                  </div>
+                  <div class="nutrition-type">Non-Vegetarian • Omega-3</div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('yogurt')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=280&h=150&fit=crop&crop=center"
+                  alt="Greek Yogurt with Berries"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Greek Yogurt with Berries</div>
+                    <div class="nutrition-calories">150 cal</div>
+                  </div>
+                  <div class="nutrition-type">Vegetarian • Probiotics</div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('avocado')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=280&h=150&fit=crop&crop=center"
+                  alt="Avocado Toast"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Avocado Toast</div>
+                    <div class="nutrition-calories">190 cal</div>
+                  </div>
+                  <div class="nutrition-type">Vegetarian • Healthy Fats</div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('curry')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=280&h=150&fit=crop&crop=center"
+                  alt="Spinach & Chickpea Curry"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Spinach & Chickpea Curry</div>
+                    <div class="nutrition-calories">180 cal</div>
+                  </div>
+                  <div class="nutrition-type">Vegetarian • Plant Protein</div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('tuna')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=280&h=150&fit=crop&crop=center"
+                  alt="Tuna Salad"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">Tuna Salad</div>
+                    <div class="nutrition-calories">200 cal</div>
+                  </div>
+                  <div class="nutrition-type">Non-Vegetarian • Low Carb</div>
+                </div>
+              </div>
+              <div
+                class="nutrition-item"
+                onclick="showNutritionDetails('sweetpotato')"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1551248429-40975aa4de74?w=280&h=150&fit=crop&crop=center"
+                  alt="Sweet Potato & Black Bean Bowl"
+                  class="nutrition-image"
+                />
+                <div class="nutrition-content">
+                  <div class="nutrition-header">
+                    <div class="nutrition-name">
+                      Sweet Potato & Black Bean Bowl
+                    </div>
+                    <div class="nutrition-calories">240 cal</div>
+                  </div>
+                  <div class="nutrition-type">Vegetarian • Complex Carbs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Added nutrition details modal -->
+      <div class="nutrition-modal" id="nutritionModal">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeNutritionModal()">
+            <i class="fas fa-times"></i>
+          </button>
+          <div id="modalBody">
+            <!-- Content will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let stopwatchInterval;
+      let stopwatchTime = 0;
+      let isRunning = false;
+      let currentMode = "stopwatch";
+      let lapCount = 0;
+      let intervalTimer;
+      let currentRound = 0;
+      let isWorkPhase = true;
+      let presetMode = false;
+      let presetDuration = 0;
+      let intervalTime = 0;
+      let totalRounds = 0;
+
+      const nutritionData = {
+        chicken: {
+          name: "Grilled Chicken Breast",
+          image:
+            "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=280&h=150&fit=crop&crop=center",
+          calories: 165,
+          protein: "31g",
+          carbs: "0g",
+          fat: "3.6g",
+          fiber: "0g",
+          sugar: "0g",
+          sodium: "74mg",
+          ingredients:
+            "Organic chicken breast, olive oil, garlic, herbs (rosemary, thyme), black pepper, sea salt",
+          cost: "$8.99",
+          type: "Non-Vegetarian • Protein Rich",
+        },
+        quinoa: {
+          name: "Quinoa Salad Bowl",
+          image:
+            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=280&h=150&fit=crop&crop=center",
+          calories: 220,
+          protein: "8g",
+          carbs: "39g",
+          fat: "3.6g",
+          fiber: "5g",
+          sugar: "4g",
+          sodium: "13mg",
+          ingredients:
+            "Organic quinoa, mixed greens, cherry tomatoes, cucumber, red onion, lemon vinaigrette, feta cheese",
+          cost: "$12.49",
+          type: "Vegetarian • High Fiber",
+        },
+        salmon: {
+          name: "Salmon Fillet",
+          image:
+            "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=280&h=150&fit=crop&crop=center",
+          calories: 206,
+          protein: "22g",
+          carbs: "0g",
+          fat: "12g",
+          fiber: "0g",
+          sugar: "0g",
+          sodium: "59mg",
+          ingredients:
+            "Wild-caught salmon fillet, lemon, dill, olive oil, garlic, black pepper, sea salt",
+          cost: "$15.99",
+          type: "Non-Vegetarian • Omega-3",
+        },
+        yogurt: {
+          name: "Greek Yogurt with Berries",
+          image:
+            "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=280&h=150&fit=crop&crop=center",
+          calories: 150,
+          protein: "15g",
+          carbs: "17g",
+          fat: "4g",
+          fiber: "3g",
+          sugar: "14g",
+          sodium: "65mg",
+          ingredients:
+            "Greek yogurt, fresh blueberries, strawberries, honey, granola, chia seeds",
+          cost: "$6.99",
+          type: "Vegetarian • Probiotics",
+        },
+        avocado: {
+          name: "Avocado Toast",
+          image:
+            "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=280&h=150&fit=crop&crop=center",
+          calories: 190,
+          protein: "4g",
+          carbs: "16g",
+          fat: "14g",
+          fiber: "7g",
+          sugar: "1g",
+          sodium: "156mg",
+          ingredients:
+            "Whole grain bread, ripe avocado, lime juice, cherry tomatoes, red pepper flakes, sea salt",
+          cost: "$9.49",
+          type: "Vegetarian • Healthy Fats",
+        },
+        curry: {
+          name: "Spinach & Chickpea Curry",
+          image:
+            "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=280&h=150&fit=crop&crop=center",
+          calories: 180,
+          protein: "9g",
+          carbs: "28g",
+          fat: "5g",
+          fiber: "8g",
+          sugar: "6g",
+          sodium: "420mg",
+          ingredients:
+            "Chickpeas, fresh spinach, coconut milk, onions, garlic, ginger, turmeric, cumin, coriander",
+          cost: "$7.99",
+          type: "Vegetarian • Plant Protein",
+        },
+        tuna: {
+          name: "Tuna Salad",
+          image:
+            "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=280&h=150&fit=crop&crop=center",
+          calories: 200,
+          protein: "25g",
+          carbs: "8g",
+          fat: "8g",
+          fiber: "3g",
+          sugar: "4g",
+          sodium: "320mg",
+          ingredients:
+            "Albacore tuna, mixed greens, cherry tomatoes, cucumber, olives, olive oil, lemon juice",
+          cost: "$11.99",
+          type: "Non-Vegetarian • Low Carb",
+        },
+        sweetpotato: {
+          name: "Sweet Potato & Black Bean Bowl",
+          image:
+            "https://images.unsplash.com/photo-1551248429-40975aa4de74?w=280&h=150&fit=crop&crop=center",
+          calories: 240,
+          protein: "10g",
+          carbs: "45g",
+          fat: "4g",
+          fiber: "12g",
+          sugar: "8g",
+          sodium: "380mg",
+          ingredients:
+            "Roasted sweet potato, black beans, quinoa, corn, bell peppers, cilantro, lime dressing",
+          cost: "$10.49",
+          type: "Vegetarian • Complex Carbs",
+        },
+      };
+
+      function startApp() {
+        document.getElementById("landing").style.display = "none";
+        document.getElementById("app").style.display = "block";
+      }
+
+      function showSection(sectionName) {
+        // Hide all sections
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => section.classList.remove("active"));
+
+        // Remove active class from all nav buttons
+        const navBtns = document.querySelectorAll(".nav-btn");
+        navBtns.forEach((btn) => btn.classList.remove("active"));
+
+        // Show selected section
+        document.getElementById(sectionName).classList.add("active");
+
+        // Add active class to clicked nav button
+        event.target.classList.add("active");
+      }
+
+      function toggleGoal(checkbox) {
+        const goalItem = checkbox.parentElement;
+        goalItem.style.animation = "slideOut 0.3s ease-in-out forwards";
+
+        setTimeout(() => {
+          // Increment completed count
+          let completedCount = parseInt(
+            localStorage.getItem("fittrack-completed-count") || "0"
+          );
+          completedCount++;
+          localStorage.setItem(
+            "fittrack-completed-count",
+            completedCount.toString()
+          );
+
+          goalItem.remove();
+          updateGoalStats();
+          saveGoals();
+        }, 300);
+      }
+
+      function setTimerMode(mode) {
+        currentMode = mode;
+        presetMode = false;
+        presetDuration = 0;
+
+        // Update active button
+        document
+          .querySelectorAll(".mode-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Show/hide relevant sections
+        document.getElementById("workoutPresets").style.display =
+          mode === "presets" ? "grid" : "none";
+        document.getElementById("intervalControls").style.display =
+          mode === "interval" ? "block" : "none";
+        document.getElementById("lapBtn").style.display =
+          mode === "stopwatch" ? "inline-block" : "none";
+
+        resetStopwatch();
+      }
+
+      function startPresetTimer(seconds) {
+        resetStopwatch();
+        presetMode = true;
+        presetDuration = seconds;
+        stopwatchTime = 0;
+        updateStopwatch();
+        startStopwatch();
+      }
+
+      function lapTime() {
+        if (isRunning && currentMode === "stopwatch") {
+          lapCount++;
+          const lapTimes = document.getElementById("lapTimes");
+          const lapList = document.getElementById("lapList");
+
+          lapTimes.style.display = "block";
+
+          const minutes = Math.floor(stopwatchTime / 60000);
+          const seconds = Math.floor((stopwatchTime % 60000) / 1000);
+          const centiseconds = Math.floor((stopwatchTime % 1000) / 10);
+
+          const lapTime =
+            (minutes < 10 ? "0" : "") +
+            minutes +
+            ":" +
+            (seconds < 10 ? "0" : "") +
+            seconds +
+            "." +
+            (centiseconds < 10 ? "0" : "") +
+            centiseconds;
+
+          const lapItem = document.createElement("div");
+          lapItem.className = "lap-item";
+          lapItem.innerHTML = `
+                    <span>Lap ${lapCount}</span>
+                    <span>${lapTime}</span>
+                `;
+          lapList.appendChild(lapItem);
+        }
+      }
+
+      function resetStopwatch() {
+        isRunning = false;
+        clearInterval(stopwatchInterval);
+        clearInterval(intervalTimer);
+        stopwatchTime = 0;
+        intervalTime = 0;
+        currentRound = 0;
+        isWorkPhase = true;
+        presetMode = false;
+        presetDuration = 0;
+        updateStopwatch();
+        clearLaps();
+        document.getElementById("startBtn").innerHTML =
+          '<i class="fas fa-play"></i> Start';
+        document.getElementById("timeDisplay").className = "time-display";
+      }
+
+      function startStopwatch() {
+        if (currentMode === "interval") {
+          startIntervalTimer();
+        } else {
+          if (!isRunning) {
+            isRunning = true;
+            document.getElementById("startBtn").innerHTML =
+              '<i class="fas fa-pause"></i> Pause';
+            stopwatchInterval = setInterval(() => {
+              stopwatchTime += 10;
+              updateStopwatch();
+            }, 10);
+          } else {
+            pauseStopwatch();
+          }
+        }
+      }
+
+      function pauseStopwatch() {
+        if (isRunning) {
+          isRunning = false;
+          clearInterval(stopwatchInterval);
+          clearInterval(intervalTimer);
+          document.getElementById("startBtn").innerHTML =
+            '<i class="fas fa-play"></i> Start';
+        }
+      }
+
+      function updateStopwatch() {
+        if (presetMode) {
+          const remainingTime = Math.max(
+            0,
+            presetDuration * 1000 - stopwatchTime
+          );
+          const minutes = Math.floor(remainingTime / 60000);
+          const seconds = Math.floor((remainingTime % 60000) / 1000);
+          const centiseconds = Math.floor((remainingTime % 1000) / 10);
+
+          document.getElementById("timeDisplay").textContent = `${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds
+            .toString()
+            .padStart(2, "0")}.${centiseconds.toString().padStart(2, "0")}`;
+
+          if (remainingTime <= 0) {
+            pauseStopwatch();
+            presetMode = false;
+            alert("Workout complete!");
+          }
+        } else {
+          // Regular stopwatch mode
+          const minutes = Math.floor(stopwatchTime / 60000);
+          const seconds = Math.floor((stopwatchTime % 60000) / 1000);
+          const centiseconds = Math.floor((stopwatchTime % 1000) / 10);
+
+          document.getElementById("timeDisplay").textContent = `${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds
+            .toString()
+            .padStart(2, "0")}.${centiseconds.toString().padStart(2, "0")}`;
+        }
+      }
+
+      function startIntervalTimer() {
+        const workTime = parseInt(document.getElementById("workTime").value);
+        const restTime = parseInt(document.getElementById("restTime").value);
+        const rounds = parseInt(document.getElementById("rounds").value);
+
+        if (
+          isNaN(workTime) ||
+          isNaN(restTime) ||
+          isNaN(rounds) ||
+          workTime <= 0 ||
+          restTime <= 0 ||
+          rounds <= 0
+        ) {
+          alert(
+            "Please enter valid values for work time, rest time, and rounds."
+          );
+          return;
+        }
+
+        if (!isRunning) {
+          isRunning = true;
+          currentRound = 1;
+          totalRounds = rounds;
+          isWorkPhase = true;
+          intervalTime = workTime;
+
+          document.getElementById("startBtn").innerHTML =
+            '<i class="fas fa-pause"></i> Pause';
+          document.getElementById("timeDisplay").className =
+            "time-display work-phase";
+
+          intervalTimer = setInterval(() => {
+            intervalTime--;
+            updateIntervalDisplay();
+
+            if (intervalTime <= 0) {
+              if (isWorkPhase) {
+                // Switch to rest phase
+                isWorkPhase = false;
+                intervalTime = restTime;
+                document.getElementById("timeDisplay").className =
+                  "time-display rest-phase";
+              } else {
+                // Switch to next round or finish
+                currentRound++;
+                if (currentRound <= totalRounds) {
+                  isWorkPhase = true;
+                  intervalTime = workTime;
+                  document.getElementById("timeDisplay").className =
+                    "time-display work-phase";
+                } else {
+                  // Workout complete
+                  clearInterval(intervalTimer);
+                  isRunning = false;
+                  document.getElementById("startBtn").innerHTML =
+                    '<i class="fas fa-play"></i> Start';
+                  document.getElementById("timeDisplay").className =
+                    "time-display";
+                  alert("Interval workout complete!");
+                  return;
+                }
+              }
+            }
+          }, 1000);
+        } else {
+          pauseStopwatch();
+        }
+      }
+
+      function updateIntervalDisplay() {
+        const minutes = Math.floor(intervalTime / 60);
+        const seconds = intervalTime % 60;
+        const phase = isWorkPhase ? "WORK" : "REST";
+
+        document.getElementById("timeDisplay").textContent = `${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds
+          .toString()
+          .padStart(2, "0")} ${phase} (${currentRound}/${totalRounds})`;
+      }
+
+      // Enhanced addGoal function with priority and category
+      function addGoal() {
+        const goalInput = document.getElementById("goalInput");
+        const prioritySelect = document.getElementById("goalPriority");
+        const categorySelect = document.getElementById("goalCategory");
+
+        if (goalInput.value.trim() === "") return;
+
+        const goalItem = document.createElement("div");
+        goalItem.className = "goal-item";
+        goalItem.setAttribute("data-priority", prioritySelect.value);
+        goalItem.setAttribute("data-category", categorySelect.value);
+
+        const categoryOptions = {
+          fitness: '<i class="fas fa-dumbbell"></i> Fitness',
+          nutrition: '<i class="fas fa-apple-alt"></i> Nutrition',
+          wellness: '<i class="fas fa-spa"></i> Wellness',
+          strength: '<i class="fas fa-fist-raised"></i> Strength',
+          cardio: '<i class="fas fa-running"></i> Cardio',
+          flexibility: '<i class="fas fa-child"></i> Flexibility',
+        };
+
+        goalItem.innerHTML = `
+                <div class="goal-content">
+                    <div class="goal-text">${goalInput.value}</div>
+                    <div class="goal-meta">
+                        <span class="goal-priority priority-${
+                          prioritySelect.value
+                        }">${prioritySelect.value.toUpperCase()}</span>
+                        <span class="goal-category">${
+                          categoryOptions[categorySelect.value] ||
+                          '<i class="fas fa-dumbbell"></i> Fitness'
+                        }</span>
+                    </div>
+                </div>
+                <div class="goal-checkbox" onclick="toggleGoal(this)">
+                    <i class="fas fa-check"></i>
+                </div>
+            `;
+
+        document.getElementById("goalsList").appendChild(goalItem);
+        goalInput.value = "";
+
+        updateGoalStats();
+        saveGoals();
+      }
+
+      // Goal filtering functionality
+      function filterGoals(filter) {
+        const goalItems = document.querySelectorAll(".goal-item");
+        const filterBtns = document.querySelectorAll(".filter-btn");
+
+        // Update active filter button
+        filterBtns.forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Filter goals
+        goalItems.forEach((item) => {
+          if (
+            filter === "all" ||
+            item.getAttribute("data-priority") === filter
+          ) {
+            item.style.display = "flex";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      }
+
+      function updateGoalStats() {
+        const goalItems = document.querySelectorAll(".goal-item");
+        const highPriorityItems = document.querySelectorAll(
+          '.goal-item[data-priority="high"]'
+        );
+
+        const totalGoalsElement = document.getElementById("totalGoals");
+        const highPriorityElement =
+          document.getElementById("highPriorityGoals");
+        const completedGoalsElement = document.getElementById("completedGoals");
+
+        if (totalGoalsElement) totalGoalsElement.textContent = goalItems.length;
+        if (highPriorityElement)
+          highPriorityElement.textContent = highPriorityItems.length;
+
+        // Get completed count from localStorage
+        const completedCount =
+          localStorage.getItem("fittrack-completed-count") || "0";
+        if (completedGoalsElement)
+          completedGoalsElement.textContent = completedCount;
+      }
+
+      // Enhanced localStorage functions
+      function saveGoals() {
+        const goals = [];
+        const goalItems = document.querySelectorAll(".goal-item");
+        goalItems.forEach((item) => {
+          const goalText = item.querySelector(".goal-text").textContent;
+          const priority = item.getAttribute("data-priority");
+          const category = item.getAttribute("data-category");
+          goals.push({
+            text: goalText,
+            priority: priority,
+            category: category,
+          });
+        });
+        localStorage.setItem("fittrack-goals", JSON.stringify(goals));
+      }
+
+      function loadGoals() {
+        const savedGoals = localStorage.getItem("fittrack-goals");
+        if (savedGoals) {
+          const goals = JSON.parse(savedGoals);
+          const goalsList = document.getElementById("goalsList");
+
+          goals.forEach((goal) => {
+            const goalText = typeof goal === "string" ? goal : goal.text;
+            const priority =
+              typeof goal === "string" ? "medium" : goal.priority || "medium";
+            const category =
+              typeof goal === "string" ? "fitness" : goal.category || "fitness";
+
+            const goalItem = document.createElement("div");
+            goalItem.className = "goal-item";
+            goalItem.setAttribute("data-priority", priority);
+            goalItem.setAttribute("data-category", category);
+
+            const categoryOptions = {
+              fitness: '<i class="fas fa-dumbbell"></i> Fitness',
+              nutrition: '<i class="fas fa-apple-alt"></i> Nutrition',
+              wellness: '<i class="fas fa-spa"></i> Wellness',
+              strength: '<i class="fas fa-fist-raised"></i> Strength',
+              cardio: '<i class="fas fa-running"></i> Cardio',
+              flexibility: '<i class="fas fa-child"></i> Flexibility',
+            };
+
+            goalItem.innerHTML = `
+                        <div class="goal-content">
+                            <div class="goal-text">${goalText}</div>
+                            <div class="goal-meta">
+                                <span class="goal-priority priority-${priority}">${priority.toUpperCase()}</span>
+                                <span class="goal-category">${
+                                  categoryOptions[category] ||
+                                  '<i class="fas fa-dumbbell"></i> Fitness'
+                                }</span>
+                            </div>
+                        </div>
+                        <div class="goal-checkbox" onclick="toggleGoal(this)">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    `;
+            goalsList.appendChild(goalItem);
+          });
+
+          updateGoalStats();
+        }
+      }
+
+      function showNutritionDetails(foodId) {
+        const food = nutritionData[foodId];
+        if (!food) return;
+
+        const modalBody = document.getElementById("modalBody");
+        modalBody.innerHTML = `
+                <div class="modal-header">
+                    <img src="${food.image}" alt="${food.name}" class="modal-image">
+                    <div>
+                        <div class="modal-title">${food.name}</div>
+                        <div class="modal-calories">${food.calories} calories</div>
+                        <div style="color: #00ccff; margin-top: 0.5rem;">${food.type}</div>
+                    </div>
+                </div>
+                
+                <div class="nutrition-details">
+                    <div class="detail-section">
+                        <div class="detail-title"><i class="fas fa-chart-bar"></i> Macronutrients</div>
+                        <div class="detail-item">
+                            <span>Protein:</span>
+                            <span class="detail-value">${food.protein}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Carbohydrates:</span>
+                            <span class="detail-value">${food.carbs}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Fat:</span>
+                            <span class="detail-value">${food.fat}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Fiber:</span>
+                            <span class="detail-value">${food.fiber}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Sugar:</span>
+                            <span class="detail-value">${food.sugar}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Sodium:</span>
+                            <span class="detail-value">${food.sodium}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <div class="detail-title"><i class="fas fa-list"></i> Ingredients</div>
+                        <div class="ingredients-list">${food.ingredients}</div>
+                        <div class="cost-badge">
+                            <i class="fas fa-dollar-sign"></i> ${food.cost}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        document.getElementById("nutritionModal").classList.add("active");
+      }
+
+      function closeNutritionModal() {
+        document.getElementById("nutritionModal").classList.remove("active");
+      }
+
+      // Close modal when clicking outside
+      document
+        .getElementById("nutritionModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeNutritionModal();
+          }
+        });
+
+      // Initialize app
+      document.addEventListener("DOMContentLoaded", function () {
+        const goalInput = document.getElementById("goalInput");
+        if (goalInput) {
+          goalInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              addGoal();
+            }
+          });
+        }
+
+        loadGoals();
+        updateGoalStats();
+      });
+
+      function clearLaps() {
+        const lapList = document.getElementById("lapList");
+        if (lapList) {
+          lapList.innerHTML = "";
+        }
+        lapCount = 0;
+        const lapTimes = document.getElementById("lapTimes");
+        if (lapTimes) {
+          lapTimes.style.display = "none";
+        }
+      }
+
+      // Add touch feedback for mobile
+      document.addEventListener("touchstart", function () {}, {
+        passive: true,
+      });
+    </script>
+  </body>
+</html>
