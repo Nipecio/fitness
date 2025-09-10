@@ -21,7 +21,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Fitness Tracker" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="theme-color" content="black" />
+    <meta name="theme-color" content="#000000" id="theme-color" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -1388,6 +1388,20 @@
     </div>
 
     <script>
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+        const pageHeight =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const halfway = pageHeight / 2;
+
+        if (scrollY < halfway) {
+          themeMeta.setAttribute("content", "#000000"); // top color
+        } else {
+          themeMeta.setAttribute("content", "#ffffff"); // bottom color
+        }
+      });
       let stopwatchInterval;
       let stopwatchTime = 0;
       let isRunning = false;
